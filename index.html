@@ -1226,6 +1226,7 @@
     const mobileNextBtn = document.getElementById("mobileNextBtn");
     const mobileDayToggle = document.getElementById("mobileDayToggle");
     const mobileDayDrawer = document.getElementById("mobileDayDrawer");
+    const dayDetailCardEl = document.getElementById("day-detail");
     const detailEl = document.getElementById("detail");
     const toggleBtn = document.getElementById("toggleBtn");
     const bar = document.getElementById("bar");
@@ -1421,6 +1422,16 @@
       });
     }
 
+    function scrollToDayDetailMobile(){
+      const quickNav = document.querySelector(".quick-nav");
+      const mobileDays = document.querySelector(".mobile-days");
+      const quickNavHeight = quickNav ? quickNav.getBoundingClientRect().height : 0;
+      const mobileDaysHeight = mobileDays ? mobileDays.getBoundingClientRect().height : 0;
+      const offset = quickNavHeight + mobileDaysHeight + 18;
+      const top = window.scrollY + dayDetailCardEl.getBoundingClientRect().top - offset;
+      window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+    }
+
     function renderDetail(){
       const day = getDay();
       const selectedPlace = getSelectedPlace(day);
@@ -1502,7 +1513,7 @@
       renderDayList();
       renderDetail();
       if (mobile && window.innerWidth <= 760) {
-        document.getElementById("detail").scrollIntoView({behavior:"smooth", block:"start"});
+        scrollToDayDetailMobile();
       }
     }
 
