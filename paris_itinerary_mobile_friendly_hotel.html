@@ -375,6 +375,24 @@
       padding:14px 16px;
     }
 
+    .location-card.place-card,
+    .food.place-chip{
+      cursor:pointer;
+      transition:transform .16s ease, box-shadow .16s ease, background .16s ease;
+    }
+
+    .location-card.place-card:hover,
+    .food.place-chip:hover{
+      transform:translateY(-1px);
+      box-shadow:0 6px 18px rgba(0,0,0,.08);
+    }
+
+    .location-card.place-card.active,
+    .food.place-chip.active{
+      background:#e5eef8;
+      box-shadow:0 8px 20px rgba(17,24,39,.08);
+    }
+
     .location-name{
       font-size:15px;
       font-weight:700;
@@ -399,6 +417,77 @@
       padding:8px 12px;
       font-size:14px;
       line-height:1.35;
+    }
+
+    .info-card{
+      background:linear-gradient(180deg,#fff,#f7fafc);
+      border:1px solid rgba(17,24,39,.08);
+      border-radius:22px;
+      padding:18px;
+      box-shadow:0 12px 30px rgba(0,0,0,.07);
+    }
+
+    .info-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:12px;
+    }
+
+    .info-type{
+      display:inline-flex;
+      align-items:center;
+      border-radius:999px;
+      padding:5px 10px;
+      background:#eef2f7;
+      color:#334155;
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .close-info{
+      min-height:36px;
+      padding:8px 12px;
+      font-size:12px;
+    }
+
+    .info-title{
+      font-size:20px;
+      line-height:1.2;
+      margin:8px 0 6px;
+    }
+
+    .info-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .info-item{
+      background:white;
+      border:1px solid rgba(17,24,39,.06);
+      border-radius:16px;
+      padding:12px;
+    }
+
+    .info-list{
+      display:grid;
+      gap:8px;
+      margin-top:14px;
+    }
+
+    .info-bullet{
+      background:white;
+      border-radius:14px;
+      padding:10px 12px;
+      font-size:13px;
+      line-height:1.5;
+      color:#475569;
+      border:1px solid rgba(17,24,39,.06);
     }
 
     .stack{
@@ -576,7 +665,8 @@
       .section{padding:18px}
       .fact-grid,
       .meta-grid,
-      .flight-grid{
+      .flight-grid,
+      .info-grid{
         grid-template-columns:1fr;
       }
 
@@ -988,8 +1078,78 @@
       "Check airport transfer timing for Mar 13 departure"
     ];
 
+    const placeMeta = {
+      "Le Jardin de Verre by Locke": {
+        type: "hotel",
+        summary: "Reliable home base in the 5th arrondissement, good for easy starts and calm returns.",
+        bestFor: "Hotel check-in, breakfast, luggage drop",
+        tips: ["Use this as the reset point after long museum or Disney days.", "Keep departure morning anchored here rather than adding another big stop."]
+      },
+      "Notre-Dame de Paris": {
+        type: "attraction",
+        summary: "High-impact first-visit landmark with the strongest sense of historic central Paris.",
+        bestFor: "Morning walk, exterior views, reservation stop",
+        tips: ["Pair it with Sainte-Chapelle for a compact route.", "Best handled earlier before the area gets busier."]
+      },
+      "Sainte-Chapelle": {
+        type: "attraction",
+        summary: "Compact, dramatic stained-glass stop that rewards a timed visit.",
+        bestFor: "Short interior visit",
+        tips: ["Treat it as a focused stop, not a long museum block.", "Works best as part of the Île de la Cité loop."]
+      },
+      "Musée du Louvre": {
+        type: "museum",
+        summary: "Priority-piece museum stop rather than an all-day completion exercise.",
+        bestFor: "Timed entry, 2-4 focused hours",
+        tips: ["Choose a few wings before you arrive.", "Use the Tuileries afterward to decompress."]
+      },
+      "Eiffel Tower": {
+        type: "attraction",
+        summary: "Best handled with a reserved slot and one nearby lunch stop rather than overpacking the day.",
+        bestFor: "Iconic views, timed ticket",
+        tips: ["Photo stops often matter more than time inside the tower.", "Keep a weather backup nearby."]
+      },
+      "Palace of Versailles": {
+        type: "day trip",
+        summary: "Big-energy excursion that benefits from an early start and realistic pacing.",
+        bestFor: "Half-day to full-day trip",
+        tips: ["Do the palace first.", "Only add Trianon if energy is still strong."]
+      },
+      "Musée d’Orsay": {
+        type: "museum",
+        summary: "Strong art stop that pairs well with a slower Saint-Germain afternoon.",
+        bestFor: "Morning museum visit",
+        tips: ["This works better as a balanced day than stacking multiple majors.", "Use the Left Bank afterward to keep the rhythm softer."]
+      },
+      "Disneyland Paris": {
+        type: "theme park",
+        summary: "Now placed on March 12 so it can be a full destination day instead of a departure gamble.",
+        bestFor: "Full-day outing",
+        tips: ["Go early and keep a clear return cutoff.", "Protect March 13 for travel rather than overflow park time."]
+      },
+      "Paris Charles de Gaulle Airport": {
+        type: "airport",
+        summary: "Departure anchor for UA55, worth treating conservatively rather than squeezing in extra sightseeing.",
+        bestFor: "Departure-day planning",
+        tips: ["Budget extra time for transfer and airport flow.", "Make this the hard constraint for Mar 13."]
+      },
+      "Rue Cler": {
+        type: "food",
+        summary: "Easy market-street lunch zone that fits naturally after the Eiffel Tower area.",
+        bestFor: "Lunch, pastry stop",
+        tips: ["Good for a low-friction midday stop.", "Works better than a heavy restaurant booking on this route."]
+      },
+      "Le Marais cafés": {
+        type: "food",
+        summary: "Flexible, low-pressure first-evening choice with plenty of easy options.",
+        bestFor: "Coffee, casual dinner",
+        tips: ["Good when arrival energy is uncertain.", "Keep this stop loose rather than destination-driven."]
+      }
+    };
+
     let showOnlyBookings = false;
     let selectedDay = "Mar 6";
+    let selectedPlaceName = null;
 
     const checklistEl = document.getElementById("checklist");
     const dayListEl = document.getElementById("dayList");
@@ -1034,6 +1194,110 @@
       return showOnlyBookings ? tripDays.filter(d => d.book.length) : tripDays;
     }
 
+    function getDay(date = selectedDay){
+      return tripDays.find(d => d.date === date);
+    }
+
+    function inferFoodAddress(item, day){
+      const match = day.locations.find(location => item.includes(location.name) || location.name.includes(item));
+      return match ? match.address : `${day.area}, Paris`;
+    }
+
+    function normalizeFoodItem(item, day){
+      const meta = placeMeta[item] || {};
+      return {
+        name: item,
+        type: meta.type || "food",
+        address: meta.address || inferFoodAddress(item, day),
+        maps: meta.maps || (day.locations[0] ? day.locations[0].maps : ""),
+        summary: meta.summary || "Useful stop within the flow of this day rather than a standalone destination.",
+        bestFor: meta.bestFor || "Quick food or coffee break",
+        tips: meta.tips || ["Use this stop to match your energy level instead of locking into a rigid plan."]
+      };
+    }
+
+    function normalizeLocationItem(item){
+      const meta = placeMeta[item.name] || {};
+      return {
+        ...item,
+        type: meta.type || "attraction",
+        summary: meta.summary || "Key stop for this day with direct map access from the itinerary.",
+        bestFor: meta.bestFor || "Primary attraction stop",
+        tips: meta.tips || ["Keep this stop aligned with the broader pace of the day."]
+      };
+    }
+
+    function getInteractivePlaces(day){
+      return [
+        ...day.food.map(item => normalizeFoodItem(item, day)),
+        ...day.locations.map(item => normalizeLocationItem(item))
+      ];
+    }
+
+    function getSelectedPlace(day){
+      if (!selectedPlaceName) return null;
+      return getInteractivePlaces(day).find(place => place.name === selectedPlaceName) || null;
+    }
+
+    function renderPlaceInfo(place){
+      if (!place) {
+        return `
+          <div class="soft-card" id="placeInfoCard">
+            <h3>Place details</h3>
+            <p>Tap a food stop or attraction to open a quick reference card with context, address, and map access.</p>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="info-card" id="placeInfoCard">
+          <div class="info-head">
+            <div>
+              <span class="info-type">${place.type}</span>
+              <h3 class="info-title">${place.name}</h3>
+              <p>${place.summary}</p>
+            </div>
+            <button type="button" class="close-info" id="closePlaceInfo">Close</button>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-item">
+              <div class="label">Best for</div>
+              <div>${place.bestFor}</div>
+            </div>
+            <div class="info-item">
+              <div class="label">Address</div>
+              <div>${place.address}</div>
+            </div>
+          </div>
+
+          <div class="info-list">
+            ${place.tips.map(tip => `<div class="info-bullet">${tip}</div>`).join("")}
+          </div>
+
+          ${place.maps ? `<a class="map-link" href="${place.maps}" target="_blank" rel="noreferrer">Open in Google Maps</a>` : ""}
+        </div>
+      `;
+    }
+
+    function bindPlaceInteractions(){
+      detailEl.querySelectorAll("[data-place-name]").forEach(node => {
+        node.addEventListener("click", event => {
+          if (event.target.closest("a")) return;
+          selectedPlaceName = node.dataset.placeName;
+          renderDetail();
+          if (window.innerWidth <= 760) {
+            document.getElementById("placeInfoCard")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          }
+        });
+      });
+
+      detailEl.querySelector("#closePlaceInfo")?.addEventListener("click", () => {
+        selectedPlaceName = null;
+        renderDetail();
+      });
+    }
+
     function renderDayList(){
       const days = getVisibleDays();
       if (!days.find(d => d.date === selectedDay)) selectedDay = days[0].date;
@@ -1067,7 +1331,8 @@
     }
 
     function renderDetail(){
-      const day = tripDays.find(d => d.date === selectedDay);
+      const day = getDay();
+      const selectedPlace = getSelectedPlace(day);
       detailEl.innerHTML = `
         <div class="badges">
           <span class="badge fill">${day.date}</span>
@@ -1099,13 +1364,17 @@
 
             <h3 style="margin-top:22px">Food rhythm</h3>
             <div class="foods">
-              ${day.food.map(item => `<span class="food">${item}</span>`).join("")}
+              ${day.food.map(item => `
+                <button type="button" class="food place-chip${selectedPlace?.name === item ? " active" : ""}" data-place-name="${item}">
+                  ${item}
+                </button>
+              `).join("")}
             </div>
 
             <h3 style="margin-top:22px">Addresses and map links</h3>
             <div class="locations">
               ${day.locations.map(location => `
-                <div class="location-card">
+                <div class="location-card place-card${selectedPlace?.name === location.name ? " active" : ""}" data-place-name="${location.name}">
                   <div class="location-name">${location.name}</div>
                   <div class="mini">${location.address}</div>
                   <a class="map-link" href="${location.maps}" target="_blank" rel="noreferrer">Open in Google Maps</a>
@@ -1129,6 +1398,8 @@
               <p>${day.tips}</p>
             </div>
 
+            ${renderPlaceInfo(selectedPlace)}
+
             <div class="dark">
               <h3>Most important reminder</h3>
               <p>Disneyland is on March 12 now, so keep March 13 focused on checkout, luggage, and a calm CDG transfer for UA55.</p>
@@ -1136,10 +1407,12 @@
           </div>
         </div>
       `;
+      bindPlaceInteractions();
     }
 
     function selectDay(date, mobile=false){
       selectedDay = date;
+      selectedPlaceName = null;
       renderDayList();
       renderDetail();
       if (mobile && window.innerWidth <= 760) {
