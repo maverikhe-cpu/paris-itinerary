@@ -1144,6 +1144,8 @@
       "Check airport transfer timing for Mar 13 departure"
     ];
 
+    const checklistStorageKey = "paris-itinerary-checklist-v1";
+
     const placeMeta = {
       "Le Jardin de Verre by Locke": {
         type: "hotel",
@@ -1233,8 +1235,28 @@
     const doneText = document.getElementById("doneText");
     const pctText = document.getElementById("pctText");
 
+    function loadChecklistState(){
+      try {
+        const raw = window.localStorage.getItem(checklistStorageKey);
+        if (!raw) return {};
+        const parsed = JSON.parse(raw);
+        return parsed && typeof parsed === "object" ? parsed : {};
+      } catch {
+        return {};
+      }
+    }
+
+    function saveChecklistState(state){
+      try {
+        window.localStorage.setItem(checklistStorageKey, JSON.stringify(state));
+      } catch {
+        // Ignore storage write failures and keep the checklist usable.
+      }
+    }
+
     function renderChecklist(){
       checklistEl.innerHTML = "";
+      const savedState = loadChecklistState();
       checklistItems.forEach((item, idx) => {
         const id = "check-" + idx;
         const row = document.createElement("label");
@@ -1244,23 +1266,28 @@
           <span>${item}</span>
         `;
         checklistEl.appendChild(row);
-        row.querySelector("input").addEventListener("change", updateProgress);
+        const input = row.querySelector("input");
+        input.checked = !!savedState[id];
+        input.addEventListener("change", updateProgress);
       });
       updateProgress();
     }
 
     function updateProgress(){
       const checks = [...checklistEl.querySelectorAll("input[type='checkbox']")];
+      const state = {};
       const done = checks.filter(c => c.checked).length;
       const pct = Math.round((done / checklistItems.length) * 100);
       bar.style.width = pct + "%";
       doneText.textContent = `${done} of ${checklistItems.length} done`;
       pctText.textContent = `${pct}%`;
       checks.forEach(c => {
+        state[c.id] = c.checked;
         const span = c.parentElement.querySelector("span");
         span.style.textDecoration = c.checked ? "line-through" : "none";
         span.style.color = c.checked ? "#a3a3a3" : "#444";
       });
+      saveChecklistState(state);
     }
 
     function getVisibleDays(){
