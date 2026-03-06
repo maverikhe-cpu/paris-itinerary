@@ -46,16 +46,18 @@
       margin-bottom:18px;
     }
 
-    .sidebar-stack{
-      display:grid;
-      gap:18px;
-    }
-
     .grid-main{
       display:grid;
       grid-template-columns:320px 1fr;
       align-items:start;
       gap:18px;
+    }
+
+    .reference-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+      margin-top:18px;
     }
 
     .card{
@@ -622,7 +624,7 @@
 
       .grid-top,
       .grid-main,
-      .sidebar-stack{
+      .reference-grid{
         display:contents;
       }
 
@@ -655,6 +657,7 @@
     @media (max-width: 1024px){
       .grid-top,
       .grid-main,
+      .reference-grid,
       .content-grid{
         grid-template-columns:1fr;
       }
@@ -807,49 +810,6 @@
         </div>
       </div>
 
-      <div class="sidebar-stack">
-        <div class="card" id="flights">
-          <div class="section">
-            <h2>Flight details</h2>
-            <p>
-              Keep the travel bookends visible here so hotel transfer timing and the Disneyland decision stay easy to check on mobile.
-            </p>
-            <div class="flight-grid">
-              <div class="flight-item">
-                <div class="label">Arrival</div>
-                <div class="flight-route">Mar 6 · Arrive in Paris</div>
-                <div class="mini">
-                  Arrival day is intentionally light: hotel check-in, Seine walk, and flexible dinner around Le Marais.
-                </div>
-              </div>
-              <div class="flight-item">
-                <div class="label">Departure</div>
-                <div class="flight-route">Mar 13 · UA55</div>
-                <div class="mini">
-                  Reference departure: around 1:25 PM from CDG. Verify the exact time on your ticket before locking in a Disney morning.
-                </div>
-              </div>
-            </div>
-            <div class="need-item">
-              <strong>Transfer check:</strong> plan around Paris Charles de Gaulle Airport, 95700 Roissy-en-France, and leave enough time for luggage, airport transfer, and check-in.
-            </div>
-          </div>
-        </div>
-
-        <div class="card" id="checklist-section">
-          <div class="section">
-            <h2>Booking checklist</h2>
-            <div class="progress-wrap">
-              <div class="progress-meta">
-                <span id="doneText">0 of 9 done</span>
-                <span id="pctText">0%</span>
-              </div>
-              <div class="progress"><div id="bar" class="bar"></div></div>
-            </div>
-            <div class="checklist" id="checklist"></div>
-          </div>
-        </div>
-      </div>
     </div>
 
     <div class="mobile-days">
@@ -873,6 +833,50 @@
 
       <div class="card" id="day-detail">
         <div class="section" id="detail"></div>
+      </div>
+    </div>
+
+    <div class="reference-grid">
+      <div class="card" id="flights">
+        <div class="section">
+          <h2>Flight details</h2>
+          <p>
+            Keep the travel bookends here as reference so the itinerary stays front and center.
+          </p>
+          <div class="flight-grid">
+            <div class="flight-item">
+              <div class="label">Arrival</div>
+              <div class="flight-route">Mar 6 · Arrive in Paris</div>
+              <div class="mini">
+                Arrival day is intentionally light: hotel check-in, Seine walk, and flexible dinner around Le Marais.
+              </div>
+            </div>
+            <div class="flight-item">
+              <div class="label">Departure</div>
+              <div class="flight-route">Mar 13 · UA55</div>
+              <div class="mini">
+                Reference departure: around 1:25 PM from CDG. Verify the exact time on your ticket before locking in a Disney morning.
+              </div>
+            </div>
+          </div>
+          <div class="need-item">
+            <strong>Transfer check:</strong> plan around Paris Charles de Gaulle Airport, 95700 Roissy-en-France, and leave enough time for luggage, airport transfer, and check-in.
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="checklist-section">
+        <div class="section">
+          <h2>Booking checklist</h2>
+          <div class="progress-wrap">
+            <div class="progress-meta">
+              <span id="doneText">0 of 9 done</span>
+              <span id="pctText">0%</span>
+            </div>
+            <div class="progress"><div id="bar" class="bar"></div></div>
+          </div>
+          <div class="checklist" id="checklist"></div>
+        </div>
       </div>
     </div>
 
