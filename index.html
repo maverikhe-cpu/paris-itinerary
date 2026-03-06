@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paris Itinerary with Disneyland Paris Finale</title>
+  <style>
+    :root{
+      --bg1:#fff1f2;
+      --bg2:#ffffff;
+      --bg3:#fafaf9;
+      --card:#ffffff;
+      --soft:#f5f5f4;
+      --text:#171717;
+      --muted:#666;
+      --border:#e7e5e4;
+      --accent:#111827;
+      --accent2:#374151;
+      --pill:#f3f4f6;
+      --shadow:0 10px 30px rgba(0,0,0,.08);
+      --radius:22px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:var(--text);
+      background:linear-gradient(to bottom,var(--bg1),var(--bg2),var(--bg3));
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+
+    .container{
+      max-width:1280px;
+      margin:0 auto;
+      padding:18px;
+    }
+
+    .grid-top{
+      display:grid;
+      grid-template-columns:1.5fr 1fr;
+      gap:18px;
+      margin-bottom:18px;
+    }
+
+    .grid-main{
+      display:grid;
+      grid-template-columns:320px 1fr;
+      gap:18px;
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:30px;
+      box-shadow:var(--shadow);
+      border:1px solid rgba(0,0,0,0.03);
+      overflow:hidden;
+    }
+
+    .section{padding:24px}
+
+    .badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:10px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      border-radius:999px;
+      padding:7px 12px;
+      font-size:12px;
+      font-weight:600;
+      background:#fff;
+      border:1px solid var(--border);
+      color:#444;
+      white-space:nowrap;
+    }
+
+    .badge.fill{
+      background:#111827;
+      color:white;
+      border:none;
+    }
+
+    h1{
+      font-size:40px;
+      line-height:1.08;
+      margin:12px 0 8px;
+      letter-spacing:-0.02em;
+    }
+
+    h2{
+      font-size:22px;
+      margin:0 0 12px;
+      letter-spacing:-0.01em;
+    }
+
+    h3{
+      font-size:18px;
+      margin:0 0 12px;
+      letter-spacing:-0.01em;
+    }
+
+    p{
+      margin:0;
+      color:#525252;
+      line-height:1.65;
+    }
+
+    .fact-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      margin-top:14px;
+    }
+
+    .fact,
+    .soft-card{
+      background:var(--soft);
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .label{
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#737373;
+      margin-bottom:6px;
+    }
+
+    .checklist{
+      display:grid;
+      gap:10px;
+    }
+
+    .check{
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      background:var(--soft);
+      border-radius:18px;
+      padding:14px 14px;
+      cursor:pointer;
+      min-height:52px;
+    }
+
+    .check input{
+      margin-top:4px;
+      width:18px;
+      height:18px;
+      flex:0 0 auto;
+    }
+
+    .progress-wrap{margin:10px 0 14px}
+    .progress-meta{
+      display:flex;
+      justify-content:space-between;
+      font-size:13px;
+      color:#666;
+      margin-bottom:8px;
+    }
+
+    .progress{
+      height:10px;
+      background:#ececec;
+      border-radius:999px;
+      overflow:hidden;
+    }
+
+    .bar{
+      height:100%;
+      width:0;
+      background:#111827;
+      transition:width .25s ease;
+    }
+
+    .toggle-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      background:var(--soft);
+      border-radius:18px;
+      padding:12px 14px;
+      font-size:14px;
+      color:#444;
+      margin-top:8px;
+    }
+
+    button{
+      border:none;
+      border-radius:999px;
+      padding:12px 15px;
+      font-weight:600;
+      cursor:pointer;
+      background:white;
+      color:#222;
+      border:1px solid var(--border);
+      min-height:44px;
+      touch-action:manipulation;
+    }
+
+    button.active{
+      background:#111827;
+      color:white;
+      border-color:#111827;
+    }
+
+    .days{
+      display:grid;
+      gap:10px;
+    }
+
+    .day-btn{
+      width:100%;
+      text-align:left;
+      padding:16px;
+      border-radius:20px;
+      border:1px solid var(--border);
+      background:white;
+      transition:.18s ease;
+      cursor:pointer;
+    }
+
+    .day-btn:hover{background:#fafafa}
+    .day-btn.active{
+      background:#111827;
+      color:white;
+      border-color:#111827;
+    }
+
+    .day-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:8px;
+    }
+
+    .mini{
+      font-size:12px;
+      color:#666;
+      line-height:1.5;
+    }
+
+    .day-btn.active .mini{color:#d4d4d8}
+
+    .pill{
+      display:inline-flex;
+      border-radius:999px;
+      padding:5px 10px;
+      font-size:12px;
+      background:var(--pill);
+      color:#444;
+      white-space:nowrap;
+    }
+
+    .day-btn.active .pill{
+      background:#374151;
+      color:#fff;
+    }
+
+    .meta-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-top:10px;
+    }
+
+    .content-grid{
+      display:grid;
+      grid-template-columns:1.3fr .9fr;
+      gap:24px;
+      margin-top:20px;
+    }
+
+    .steps{
+      display:grid;
+      gap:10px;
+    }
+
+    .step{
+      background:var(--soft);
+      border-radius:18px;
+      padding:14px 16px;
+      line-height:1.7;
+      font-size:14px;
+    }
+
+    .num{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:24px;
+      height:24px;
+      border-radius:999px;
+      background:white;
+      margin-right:8px;
+      font-size:12px;
+      font-weight:700;
+      box-shadow:0 1px 4px rgba(0,0,0,.08)
+    }
+
+    .foods{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .food{
+      background:#eef2f7;
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:14px;
+      line-height:1.35;
+    }
+
+    .stack{
+      display:grid;
+      gap:16px;
+    }
+
+    .need-item{
+      background:white;
+      border-radius:16px;
+      padding:12px 14px;
+      box-shadow:0 1px 4px rgba(0,0,0,.05);
+      font-size:14px;
+      line-height:1.6;
+      margin-top:10px;
+    }
+
+    .dark{
+      background:#111827;
+      color:white;
+      border-radius:24px;
+      padding:18px
+    }
+
+    .dark p{color:#e5e7eb}
+
+    .footer-note{
+      margin-top:14px;
+      font-size:13px;
+      color:#777;
+      line-height:1.6;
+    }
+
+    .mobile-days{
+      display:none;
+    }
+
+    .mobile-days-scroll{
+      display:flex;
+      gap:10px;
+      overflow-x:auto;
+      padding:4px 2px 2px;
+      scrollbar-width:none;
+      -webkit-overflow-scrolling:touch;
+      scroll-snap-type:x proximity;
+    }
+
+    .mobile-days-scroll::-webkit-scrollbar{
+      display:none;
+    }
+
+    .day-chip{
+      border:1px solid var(--border);
+      background:white;
+      border-radius:18px;
+      padding:12px 14px;
+      min-width:170px;
+      scroll-snap-align:start;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      cursor:pointer;
+    }
+
+    .day-chip.active{
+      background:#111827;
+      color:white;
+      border-color:#111827;
+    }
+
+    .day-chip .chip-date{
+      font-size:12px;
+      font-weight:700;
+      opacity:.9;
+    }
+
+    .day-chip .chip-title{
+      font-size:13px;
+      font-weight:600;
+      line-height:1.35;
+    }
+
+    @media (max-width: 1024px){
+      .grid-top,
+      .grid-main,
+      .content-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 760px){
+      .container{padding:12px}
+      .section{padding:18px}
+      .fact-grid,
+      .meta-grid{
+        grid-template-columns:1fr;
+      }
+
+      h1{
+        font-size:30px;
+        line-height:1.15;
+      }
+
+      h2{
+        font-size:20px;
+      }
+
+      .grid-top{
+        gap:14px;
+        margin-bottom:14px;
+      }
+
+      .grid-main{
+        gap:14px;
+      }
+
+      .card{
+        border-radius:24px;
+      }
+
+      .toggle-row{
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .days{
+        display:none;
+      }
+
+      .mobile-days{
+        display:block;
+        position:sticky;
+        top:0;
+        z-index:10;
+        margin:-4px 0 14px;
+      }
+
+      .mobile-days-inner{
+        background:rgba(255,255,255,0.92);
+        backdrop-filter:blur(10px);
+        border:1px solid rgba(0,0,0,0.05);
+        border-radius:20px;
+        padding:10px;
+        box-shadow:0 8px 24px rgba(0,0,0,.06);
+      }
+
+      .content-grid{
+        gap:16px;
+      }
+
+      .step{
+        font-size:15px;
+        padding:14px;
+      }
+
+      .food{
+        font-size:13px;
+      }
+
+      .footer-note{
+        padding:0 4px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="grid-top">
+      <div class="card">
+        <div class="section">
+          <div class="badges">
+            <span class="badge">Paris first trip</span>
+            <span class="badge">Mar 6–13, 2026</span>
+            <span class="badge fill">Disney on Mar 13</span>
+            <span class="badge">Hotel: Le Jardin de Verre by Locke</span>
+          </div>
+          <h1>Paris itinerary with Disneyland Paris finale</h1>
+          <p>
+            Built for a first visit: the classics first, neighborhoods with breathing room,
+            and a final Disneyland Paris day. On mobile, use the day scroller below to flip between days.
+          </p>
+          <div class="soft-card" style="margin-top:14px">
+            <div class="label">Your hotel</div>
+            <div style="font-weight:700;margin-bottom:4px">Le Jardin de Verre by Locke</div>
+            <div style="color:#525252;line-height:1.65">
+              Use this as your home base for daily metro planning, breakfast starts, and evening returns.
+              I’ve added it directly into the itinerary so the trip feels centered around where you’re staying.
+            </div>
+          </div>
+
+          <div class="fact-grid">
+            <div class="fact">
+              <div class="label">Disneyland Paris access</div>
+              <div>RER A from central Paris, about 40 minutes to Marne-la-Vallée–Chessy</div>
+            </div>
+            <div class="fact">
+              <div class="label">Louvre</div>
+              <div>Closed Tuesdays</div>
+            </div>
+            <div class="fact">
+              <div class="label">Musée d’Orsay</div>
+              <div>Closed Mondays</div>
+            </div>
+            <div class="fact">
+              <div class="label">Versailles</div>
+              <div>Palace closed Mondays</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section">
+          <h2>Booking checklist</h2>
+          <div class="progress-wrap">
+            <div class="progress-meta">
+              <span id="doneText">0 of 9 done</span>
+              <span id="pctText">0%</span>
+            </div>
+            <div class="progress"><div id="bar" class="bar"></div></div>
+          </div>
+          <div class="checklist" id="checklist"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-days">
+      <div class="mobile-days-inner">
+        <div class="label" style="margin-bottom:8px">Trip days</div>
+        <div class="mobile-days-scroll" id="mobileDayList"></div>
+      </div>
+    </div>
+
+    <div class="grid-main">
+      <div class="card">
+        <div class="section">
+          <h2>Trip days</h2>
+          <div class="toggle-row">
+            <span>Only days with bookings</span>
+            <button id="toggleBtn">Show bookings only</button>
+          </div>
+          <div class="days" id="dayList" style="margin-top:12px"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section" id="detail"></div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      Hotel base: <strong>Le Jardin de Verre by Locke</strong>. This version now includes your hotel so you can customize routes and meal plans around it.
+    </div>
+
+    <div class="footer-note">
+      Note: Disneyland on March 13 only works comfortably if your UA55 departure is late enough for park time plus airport transfer.
+    </div>
+  </div>
+
+  <script>
+    const tripDays = [
+      {
+        date: "Mar 6",
+        title: "Arrival + easy first Paris evening",
+        theme: "Settle in gently",
+        area: "Île de la Cité · Seine · Le Marais",
+        pace: "Light",
+        weather: "Mild, around 20°C / 68°F",
+        plan: [
+          "Check in and rest a bit after arrival.",
+          "Walk around Île de la Cité and along the Seine for your first Paris views.",
+          "See Notre-Dame from outside if you want a low-effort first stop.",
+          "Have dinner in Le Marais and keep the night flexible."
+        ],
+        food: ["Le Marais cafés", "Falafel or bistro dinner", "Easy early night"],
+        book: [],
+        tips: "Do not overschedule this day. Paris is best when the first evening feels relaxed."
+      },
+      {
+        date: "Mar 7",
+        title: "Notre-Dame + Sainte-Chapelle + Latin Quarter",
+        theme: "Historic Paris",
+        area: "Île de la Cité · Latin Quarter",
+        pace: "Moderate",
+        weather: "Pleasant, around 20°C / 68°F",
+        plan: [
+          "Morning visit to Notre-Dame.",
+          "Walk to Sainte-Chapelle for the stained glass.",
+          "Lunch in the Latin Quarter.",
+          "Afternoon around the Panthéon or Luxembourg Gardens."
+        ],
+        food: ["Latin Quarter crêpes", "Classic café lunch", "Dessert stop in Saint-Michel"],
+        book: ["Notre-Dame free reservation", "Sainte-Chapelle timed entry"],
+        tips: "This is a very walkable day with lots of atmosphere and not too much transit."
+      },
+      {
+        date: "Mar 8",
+        title: "Louvre + Tuileries + Palais Royal + Seine cruise",
+        theme: "Classic first-timer Paris",
+        area: "1st arrondissement",
+        pace: "Full",
+        weather: "Partly sunny, around 19°C / 67°F",
+        plan: [
+          "Start with a timed-entry Louvre visit.",
+          "After the museum, walk through the Tuileries.",
+          "Stop by Palais Royal and nearby arcades.",
+          "Do an evening Seine cruise after dinner."
+        ],
+        food: ["Lunch near Palais Royal", "Hot chocolate break", "Dinner before cruise"],
+        book: ["Louvre timed entry", "Seine cruise optional prebook"],
+        tips: "Do not try to see the whole Louvre. Pick a few priority wings and enjoy them properly."
+      },
+      {
+        date: "Mar 9",
+        title: "Eiffel Tower + Rue Cler + Invalides / Rodin",
+        theme: "Iconic views",
+        area: "7th arrondissement",
+        pace: "Moderate",
+        weather: "Cloudier with possible afternoon showers, around 18°C / 64°F",
+        plan: [
+          "Go to Trocadéro or Bir-Hakeim early for Eiffel photos.",
+          "Visit the Eiffel Tower with a reserved slot.",
+          "Lunch near Rue Cler.",
+          "Choose Les Invalides or the Rodin Museum in the afternoon."
+        ],
+        food: ["Rue Cler lunch", "Pastry stop", "Relaxed brasserie dinner"],
+        book: ["Eiffel Tower timed ticket"],
+        tips: "This day has a good indoor backup if showers show up later."
+      },
+      {
+        date: "Mar 10",
+        title: "Montmartre + Opéra + Galeries Lafayette",
+        theme: "Atmosphere day",
+        area: "Montmartre · Opéra",
+        pace: "Moderate",
+        weather: "Some sun, possible late shower, around 17°C / 62°F",
+        plan: [
+          "Morning in Montmartre and Sacré-Cœur.",
+          "Wander the quieter side streets before lunch.",
+          "Head down to the Opéra district.",
+          "Finish with the Galeries Lafayette rooftop and shopping if you want."
+        ],
+        food: ["Montmartre café breakfast", "Bistro lunch", "Department store food hall or nearby dinner"],
+        book: [],
+        tips: "This is intentionally lighter and more scenic so the trip does not become museum overload."
+      },
+      {
+        date: "Mar 11",
+        title: "Versailles day trip",
+        theme: "Big excursion day",
+        area: "Versailles",
+        pace: "Full",
+        weather: "Mostly cloudy, around 17°C / 63°F",
+        plan: [
+          "Leave Paris early for Versailles.",
+          "Visit the Palace first.",
+          "Walk the gardens if energy and weather cooperate.",
+          "Add the Trianon Estate only if you still feel fresh."
+        ],
+        food: ["Snack before arrival", "Lunch on-site or nearby", "Simple dinner back in Paris"],
+        book: ["Versailles passport/timed ticket"],
+        tips: "This is the most tiring day of the trip, so give yourself a slower evening afterward."
+      },
+      {
+        date: "Mar 12",
+        title: "Musée d’Orsay + Saint-Germain + Arc de Triomphe sunset",
+        theme: "Art + elegant Paris finale",
+        area: "Left Bank · Champs-Élysées",
+        pace: "Moderate",
+        weather: "Brighter again, around 18°C / 64°F",
+        plan: [
+          "Morning at Musée d’Orsay.",
+          "Lunch and café time in Saint-Germain-des-Prés.",
+          "Flexible afternoon for shopping or rest.",
+          "End with Arc de Triomphe at sunset and a farewell dinner."
+        ],
+        food: ["Saint-Germain lunch", "Café stop", "Nice final Paris dinner"],
+        book: ["Musée d’Orsay ticket", "Arc de Triomphe optional ticket"],
+        tips: "Keeping this day balanced helps you still have energy for Disney the next day."
+      },
+      {
+        date: "Mar 13",
+        title: "Disneyland Paris day",
+        theme: "Confirmed must-do",
+        area: "Marne-la-Vallée",
+        pace: "Full",
+        weather: "Cloudy with light rain possible, around 15°C / 60°F",
+        plan: [
+          "Take the RER A early to Marne-la-Vallée–Chessy.",
+          "Spend the day in Disneyland Paris and/or Walt Disney Studios Park.",
+          "Keep a hard cutoff time based on your airport transfer needs.",
+          "Head to the airport only if your flight timing truly allows a park day."
+        ],
+        food: ["Quick breakfast before train", "Mobile-order or quick-service lunch", "Early dinner only if time allows"],
+        book: ["Disneyland Paris dated ticket"],
+        tips: "Only keep this as a same-day park + departure plan if your UA55 departure is late enough. If not, move Disney to Mar 12 and treat Mar 13 as departure only."
+      }
+    ];
+
+    const checklistItems = [
+      "Book Disneyland Paris dated tickets",
+      "Book Louvre timed entry",
+      "Book Eiffel Tower timed entry",
+      "Book Versailles ticket",
+      "Book Musée d’Orsay ticket",
+      "Reserve Notre-Dame free entry",
+      "Book Sainte-Chapelle time slot",
+      "Decide if you want a Seine cruise",
+      "Check airport transfer timing for Mar 13"
+    ];
+
+    let showOnlyBookings = false;
+    let selectedDay = "Mar 6";
+
+    const checklistEl = document.getElementById("checklist");
+    const dayListEl = document.getElementById("dayList");
+    const mobileDayListEl = document.getElementById("mobileDayList");
+    const detailEl = document.getElementById("detail");
+    const toggleBtn = document.getElementById("toggleBtn");
+    const bar = document.getElementById("bar");
+    const doneText = document.getElementById("doneText");
+    const pctText = document.getElementById("pctText");
+
+    function renderChecklist(){
+      checklistEl.innerHTML = "";
+      checklistItems.forEach((item, idx) => {
+        const id = "check-" + idx;
+        const row = document.createElement("label");
+        row.className = "check";
+        row.innerHTML = `
+          <input type="checkbox" id="${id}">
+          <span>${item}</span>
+        `;
+        checklistEl.appendChild(row);
+        row.querySelector("input").addEventListener("change", updateProgress);
+      });
+      updateProgress();
+    }
+
+    function updateProgress(){
+      const checks = [...checklistEl.querySelectorAll("input[type='checkbox']")];
+      const done = checks.filter(c => c.checked).length;
+      const pct = Math.round((done / checklistItems.length) * 100);
+      bar.style.width = pct + "%";
+      doneText.textContent = `${done} of ${checklistItems.length} done`;
+      pctText.textContent = `${pct}%`;
+      checks.forEach(c => {
+        const span = c.parentElement.querySelector("span");
+        span.style.textDecoration = c.checked ? "line-through" : "none";
+        span.style.color = c.checked ? "#a3a3a3" : "#444";
+      });
+    }
+
+    function getVisibleDays(){
+      return showOnlyBookings ? tripDays.filter(d => d.book.length) : tripDays;
+    }
+
+    function renderDayList(){
+      const days = getVisibleDays();
+      if (!days.find(d => d.date === selectedDay)) selectedDay = days[0].date;
+
+      dayListEl.innerHTML = "";
+      mobileDayListEl.innerHTML = "";
+
+      days.forEach(day => {
+        const btn = document.createElement("button");
+        btn.className = "day-btn" + (day.date === selectedDay ? " active" : "");
+        btn.innerHTML = `
+          <div class="day-top">
+            <div style="font-size:14px;font-weight:600">${day.date}</div>
+            <span class="pill">${day.pace}</span>
+          </div>
+          <div style="font-size:14px;font-weight:700;line-height:1.45">${day.title}</div>
+          <div class="mini" style="margin-top:4px">${day.area}</div>
+        `;
+        btn.addEventListener("click", () => selectDay(day.date));
+        dayListEl.appendChild(btn);
+
+        const chip = document.createElement("button");
+        chip.className = "day-chip" + (day.date === selectedDay ? " active" : "");
+        chip.innerHTML = `
+          <span class="chip-date">${day.date}</span>
+          <span class="chip-title">${day.title}</span>
+        `;
+        chip.addEventListener("click", () => selectDay(day.date, true));
+        mobileDayListEl.appendChild(chip);
+      });
+    }
+
+    function renderDetail(){
+      const day = tripDays.find(d => d.date === selectedDay);
+      detailEl.innerHTML = `
+        <div class="badges">
+          <span class="badge fill">${day.date}</span>
+          <span class="badge">${day.theme}</span>
+          <span class="badge">${day.pace} pace</span>
+        </div>
+        <h1 style="font-size:clamp(28px, 5vw, 34px);margin-top:8px">${day.title}</h1>
+        <div class="meta-grid">
+          <div class="soft-card">
+            <div class="label">Area</div>
+            <div>${day.area}</div>
+          </div>
+          <div class="soft-card">
+            <div class="label">Weather</div>
+            <div>${day.weather}</div>
+          </div>
+          <div class="soft-card">
+            <div class="label">Style</div>
+            <div>${day.theme}</div>
+          </div>
+        </div>
+
+        <div class="content-grid">
+          <div>
+            <h3>Plan for the day</h3>
+            <div class="steps">
+              ${day.plan.map((item, i) => `<div class="step"><span class="num">${i+1}</span>${item}</div>`).join("")}
+            </div>
+
+            <h3 style="margin-top:22px">Food rhythm</h3>
+            <div class="foods">
+              ${day.food.map(item => `<span class="food">${item}</span>`).join("")}
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="soft-card">
+              <h3>Needs booking</h3>
+              ${
+                day.book.length
+                  ? day.book.map(item => `<div class="need-item">${item}</div>`).join("")
+                  : `<p>No major timed booking required for this day.</p>`
+              }
+            </div>
+
+            <div class="soft-card">
+              <h3>Trip note</h3>
+              <p>${day.tips}</p>
+            </div>
+
+            <div class="dark">
+              <h3>Most important reminder</h3>
+              <p>March 13 only works as a Disneyland day if your departure time gives you enough margin to leave the park, collect luggage if needed, and reach the airport calmly.</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function selectDay(date, mobile=false){
+      selectedDay = date;
+      renderDayList();
+      renderDetail();
+      if (mobile && window.innerWidth <= 760) {
+        document.getElementById("detail").scrollIntoView({behavior:"smooth", block:"start"});
+      }
+    }
+
+    toggleBtn.addEventListener("click", () => {
+      showOnlyBookings = !showOnlyBookings;
+      toggleBtn.textContent = showOnlyBookings ? "Showing booked days" : "Show bookings only";
+      toggleBtn.classList.toggle("active", showOnlyBookings);
+      renderDayList();
+      renderDetail();
+    });
+
+    renderChecklist();
+    renderDayList();
+    renderDetail();
+  </script>
+</body>
+</html>

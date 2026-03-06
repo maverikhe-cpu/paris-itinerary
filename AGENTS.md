@@ -1,12 +1,12 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-This repository is currently a lightweight static project centered on [`paris_itinerary_mobile_friendly_hotel.html`](/Users/mingjiehe/Desktop/development/Paris%202026/paris_itinerary_mobile_friendly_hotel.html). HTML markup, CSS, and JavaScript are embedded in that file. If the project grows, keep related assets in dedicated folders such as `assets/` for images, `styles/` for extracted CSS, and `scripts/` for reusable JavaScript rather than expanding inline blocks indefinitely.
+This repository is currently a lightweight static site centered on [`index.html`](/Users/mingjiehe/Desktop/development/Paris%202026/index.html). The older [`paris_itinerary_mobile_friendly_hotel.html`](/Users/mingjiehe/Desktop/development/Paris%202026/paris_itinerary_mobile_friendly_hotel.html) file remains as a named copy of the same page. HTML markup, CSS, and JavaScript are embedded in the page file. If the project grows, keep related assets in dedicated folders such as `assets/` for images, `styles/` for extracted CSS, and `scripts/` for reusable JavaScript rather than expanding inline blocks indefinitely.
 
 ## Build, Test, and Development Commands
 There is no build system or package manager configured yet. Use simple local-preview commands:
 
-- `open paris_itinerary_mobile_friendly_hotel.html`: open the page in the default browser on macOS.
+- `open index.html`: open the site entry page in the default browser on macOS.
 - `python3 -m http.server 8000`: serve the repository locally at `http://localhost:8000` for browser testing.
 
 If you add tooling later, document the exact install and run commands here and keep them reproducible.
