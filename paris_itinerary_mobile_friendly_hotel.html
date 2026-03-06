@@ -45,6 +45,11 @@
       margin-bottom:18px;
     }
 
+    .sidebar-stack{
+      display:grid;
+      gap:18px;
+    }
+
     .grid-main{
       display:grid;
       grid-template-columns:320px 1fr;
@@ -134,6 +139,47 @@
       text-transform:uppercase;
       color:#737373;
       margin-bottom:6px;
+    }
+
+    .quick-nav{
+      position:sticky;
+      top:10px;
+      z-index:12;
+      margin-bottom:18px;
+    }
+
+    .quick-nav-inner{
+      display:flex;
+      gap:10px;
+      overflow-x:auto;
+      padding:10px 12px;
+      background:rgba(255,255,255,0.9);
+      border:1px solid rgba(0,0,0,0.05);
+      border-radius:20px;
+      backdrop-filter:blur(10px);
+      box-shadow:0 8px 24px rgba(0,0,0,.06);
+      scrollbar-width:none;
+      -webkit-overflow-scrolling:touch;
+    }
+
+    .quick-nav-inner::-webkit-scrollbar{
+      display:none;
+    }
+
+    .quick-link{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:999px;
+      padding:10px 14px;
+      background:white;
+      border:1px solid var(--border);
+      color:#333;
+      text-decoration:none;
+      white-space:nowrap;
+      font-size:13px;
+      font-weight:600;
+      min-height:42px;
     }
 
     .checklist{
@@ -347,6 +393,43 @@
 
     .dark p{color:#e5e7eb}
 
+    .flight-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+      margin-top:12px;
+    }
+
+    .flight-item{
+      background:var(--soft);
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .flight-route{
+      font-size:16px;
+      font-weight:700;
+      margin-bottom:6px;
+      color:#1f2937;
+    }
+
+    .jump-top{
+      position:fixed;
+      right:16px;
+      bottom:16px;
+      z-index:20;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:46px;
+      min-height:46px;
+      border-radius:999px;
+      background:#111827;
+      color:white;
+      text-decoration:none;
+      box-shadow:0 10px 24px rgba(0,0,0,.18);
+    }
+
     .footer-note{
       margin-top:14px;
       font-size:13px;
@@ -415,7 +498,8 @@
       .container{padding:12px}
       .section{padding:18px}
       .fact-grid,
-      .meta-grid{
+      .meta-grid,
+      .flight-grid{
         grid-template-columns:1fr;
       }
 
@@ -471,6 +555,16 @@
         gap:16px;
       }
 
+      .quick-nav{
+        top:8px;
+        margin-bottom:14px;
+      }
+
+      .quick-nav-inner{
+        border-radius:18px;
+        padding:8px 10px;
+      }
+
       .step{
         font-size:15px;
         padding:14px;
@@ -487,9 +581,21 @@
   </style>
 </head>
 <body>
+  <div id="top"></div>
   <div class="container">
+    <div class="quick-nav">
+      <div class="quick-nav-inner">
+        <a class="quick-link" href="#summary">Summary</a>
+        <a class="quick-link" href="#flights">Flights</a>
+        <a class="quick-link" href="#checklist-section">Checklist</a>
+        <a class="quick-link" href="#trip-days">Trip days</a>
+        <a class="quick-link" href="#day-detail">Day detail</a>
+        <a class="quick-link" href="#notes">Notes</a>
+      </div>
+    </div>
+
     <div class="grid-top">
-      <div class="card">
+      <div class="card" id="summary">
         <div class="section">
           <div class="badges">
             <span class="badge">Paris first trip</span>
@@ -532,17 +638,47 @@
         </div>
       </div>
 
-      <div class="card">
-        <div class="section">
-          <h2>Booking checklist</h2>
-          <div class="progress-wrap">
-            <div class="progress-meta">
-              <span id="doneText">0 of 9 done</span>
-              <span id="pctText">0%</span>
+      <div class="sidebar-stack">
+        <div class="card" id="flights">
+          <div class="section">
+            <h2>Flight details</h2>
+            <p>
+              Keep the travel bookends visible here so hotel transfer timing and the Disneyland decision stay easy to check on mobile.
+            </p>
+            <div class="flight-grid">
+              <div class="flight-item">
+                <div class="label">Arrival</div>
+                <div class="flight-route">Mar 6 · Arrive in Paris</div>
+                <div class="mini">
+                  Arrival day is intentionally light: hotel check-in, Seine walk, and flexible dinner around Le Marais.
+                </div>
+              </div>
+              <div class="flight-item">
+                <div class="label">Departure</div>
+                <div class="flight-route">Mar 13 · UA55</div>
+                <div class="mini">
+                  Disneyland only works if departure timing leaves enough margin for luggage, airport transfer, and check-in.
+                </div>
+              </div>
             </div>
-            <div class="progress"><div id="bar" class="bar"></div></div>
+            <div class="need-item">
+              <strong>Transfer check:</strong> lock the airport departure time before treating Mar 13 as a full park day.
+            </div>
           </div>
-          <div class="checklist" id="checklist"></div>
+        </div>
+
+        <div class="card" id="checklist-section">
+          <div class="section">
+            <h2>Booking checklist</h2>
+            <div class="progress-wrap">
+              <div class="progress-meta">
+                <span id="doneText">0 of 9 done</span>
+                <span id="pctText">0%</span>
+              </div>
+              <div class="progress"><div id="bar" class="bar"></div></div>
+            </div>
+            <div class="checklist" id="checklist"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -555,7 +691,7 @@
     </div>
 
     <div class="grid-main">
-      <div class="card">
+      <div class="card" id="trip-days">
         <div class="section">
           <h2>Trip days</h2>
           <div class="toggle-row">
@@ -566,12 +702,12 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card" id="day-detail">
         <div class="section" id="detail"></div>
       </div>
     </div>
 
-    <div class="footer-note">
+    <div class="footer-note" id="notes">
       Hotel base: <strong>Le Jardin de Verre by Locke</strong>. This version now includes your hotel so you can customize routes and meal plans around it.
     </div>
 
@@ -579,6 +715,8 @@
       Note: Disneyland on March 13 only works comfortably if your UA55 departure is late enough for park time plus airport transfer.
     </div>
   </div>
+
+  <a class="jump-top" href="#top" aria-label="Back to top">Top</a>
 
   <script>
     const tripDays = [
