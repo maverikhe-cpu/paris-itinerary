@@ -361,6 +361,36 @@
       gap:8px;
     }
 
+    .locations{
+      display:grid;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .location-card{
+      background:var(--soft);
+      border-radius:18px;
+      padding:14px 16px;
+    }
+
+    .location-name{
+      font-size:15px;
+      font-weight:700;
+      color:#1f2937;
+      margin-bottom:4px;
+    }
+
+    .map-link{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      margin-top:8px;
+      color:#111827;
+      font-size:13px;
+      font-weight:700;
+      text-decoration:none;
+    }
+
     .food{
       background:#eef2f7;
       border-radius:999px;
@@ -615,6 +645,8 @@
               Use this as your home base for daily metro planning, breakfast starts, and evening returns.
               I’ve added it directly into the itinerary so the trip feels centered around where you’re staying.
             </div>
+            <div class="mini" style="margin-top:10px">7 Rue Lacépède, 75005 Paris</div>
+            <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Le+Jardin+de+Verre+by+Locke%2C+7+Rue+Lac%C3%A9p%C3%A8de%2C+75005+Paris" target="_blank" rel="noreferrer">Open hotel in Google Maps</a>
           </div>
 
           <div class="fact-grid">
@@ -657,12 +689,12 @@
                 <div class="label">Departure</div>
                 <div class="flight-route">Mar 13 · UA55</div>
                 <div class="mini">
-                  Disneyland only works if departure timing leaves enough margin for luggage, airport transfer, and check-in.
+                  Reference departure: around 1:25 PM from CDG. Verify the exact time on your ticket before locking in a Disney morning.
                 </div>
               </div>
             </div>
             <div class="need-item">
-              <strong>Transfer check:</strong> lock the airport departure time before treating Mar 13 as a full park day.
+              <strong>Transfer check:</strong> plan around Paris Charles de Gaulle Airport, 95700 Roissy-en-France, and leave enough time for luggage, airport transfer, and check-in.
             </div>
           </div>
         </div>
@@ -734,6 +766,11 @@
           "Have dinner in Le Marais and keep the night flexible."
         ],
         food: ["Le Marais cafés", "Falafel or bistro dinner", "Easy early night"],
+        locations: [
+          { name: "Le Jardin de Verre by Locke", address: "7 Rue Lacépède, 75005 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Le+Jardin+de+Verre+by+Locke%2C+7+Rue+Lac%C3%A9p%C3%A8de%2C+75005+Paris" },
+          { name: "Notre-Dame de Paris", address: "6 Parvis Notre-Dame - Pl. Jean-Paul II, 75004 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Notre-Dame+de+Paris%2C+6+Parvis+Notre-Dame+-+Pl.+Jean-Paul+II%2C+75004+Paris" },
+          { name: "Le Marais", address: "Le Marais, 75004 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Le+Marais%2C+75004+Paris" }
+        ],
         book: [],
         tips: "Do not overschedule this day. Paris is best when the first evening feels relaxed."
       },
@@ -751,6 +788,11 @@
           "Afternoon around the Panthéon or Luxembourg Gardens."
         ],
         food: ["Latin Quarter crêpes", "Classic café lunch", "Dessert stop in Saint-Michel"],
+        locations: [
+          { name: "Notre-Dame de Paris", address: "6 Parvis Notre-Dame - Pl. Jean-Paul II, 75004 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Notre-Dame+de+Paris%2C+6+Parvis+Notre-Dame+-+Pl.+Jean-Paul+II%2C+75004+Paris" },
+          { name: "Sainte-Chapelle", address: "10 Boulevard du Palais, 75001 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Sainte-Chapelle%2C+10+Boulevard+du+Palais%2C+75001+Paris" },
+          { name: "Panthéon", address: "Place du Panthéon, 75005 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Panth%C3%A9on%2C+Place+du+Panth%C3%A9on%2C+75005+Paris" }
+        ],
         book: ["Notre-Dame free reservation", "Sainte-Chapelle timed entry"],
         tips: "This is a very walkable day with lots of atmosphere and not too much transit."
       },
@@ -768,6 +810,11 @@
           "Do an evening Seine cruise after dinner."
         ],
         food: ["Lunch near Palais Royal", "Hot chocolate break", "Dinner before cruise"],
+        locations: [
+          { name: "Musée du Louvre", address: "Rue de Rivoli, 75001 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Mus%C3%A9e+du+Louvre%2C+Rue+de+Rivoli%2C+75001+Paris" },
+          { name: "Jardin des Tuileries", address: "113 Rue de Rivoli, 75001 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Jardin+des+Tuileries%2C+113+Rue+de+Rivoli%2C+75001+Paris" },
+          { name: "Palais-Royal", address: "8 Rue de Montpensier, 75001 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Palais-Royal%2C+8+Rue+de+Montpensier%2C+75001+Paris" }
+        ],
         book: ["Louvre timed entry", "Seine cruise optional prebook"],
         tips: "Do not try to see the whole Louvre. Pick a few priority wings and enjoy them properly."
       },
@@ -785,6 +832,12 @@
           "Choose Les Invalides or the Rodin Museum in the afternoon."
         ],
         food: ["Rue Cler lunch", "Pastry stop", "Relaxed brasserie dinner"],
+        locations: [
+          { name: "Eiffel Tower", address: "5 Avenue Anatole France, 75007 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Eiffel+Tower%2C+5+Avenue+Anatole+France%2C+75007+Paris" },
+          { name: "Rue Cler", address: "Rue Cler, 75007 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Rue+Cler%2C+75007+Paris" },
+          { name: "Les Invalides", address: "129 Rue de Grenelle, 75007 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Les+Invalides%2C+129+Rue+de+Grenelle%2C+75007+Paris" },
+          { name: "Musée Rodin", address: "77 Rue de Varenne, 75007 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Mus%C3%A9e+Rodin%2C+77+Rue+de+Varenne%2C+75007+Paris" }
+        ],
         book: ["Eiffel Tower timed ticket"],
         tips: "This day has a good indoor backup if showers show up later."
       },
@@ -802,6 +855,11 @@
           "Finish with the Galeries Lafayette rooftop and shopping if you want."
         ],
         food: ["Montmartre café breakfast", "Bistro lunch", "Department store food hall or nearby dinner"],
+        locations: [
+          { name: "Sacré-Cœur", address: "35 Rue du Chevalier de la Barre, 75018 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Sacr%C3%A9-C%C5%93ur%2C+35+Rue+du+Chevalier+de+la+Barre%2C+75018+Paris" },
+          { name: "Palais Garnier", address: "Place de l'Opéra, 75009 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Palais+Garnier%2C+Place+de+l%27Op%C3%A9ra%2C+75009+Paris" },
+          { name: "Galeries Lafayette Haussmann", address: "40 Boulevard Haussmann, 75009 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Galeries+Lafayette+Haussmann%2C+40+Boulevard+Haussmann%2C+75009+Paris" }
+        ],
         book: [],
         tips: "This is intentionally lighter and more scenic so the trip does not become museum overload."
       },
@@ -819,6 +877,10 @@
           "Add the Trianon Estate only if you still feel fresh."
         ],
         food: ["Snack before arrival", "Lunch on-site or nearby", "Simple dinner back in Paris"],
+        locations: [
+          { name: "Palace of Versailles", address: "Place d'Armes, 78000 Versailles", maps: "https://www.google.com/maps/search/?api=1&query=Palace+of+Versailles%2C+Place+d%27Armes%2C+78000+Versailles" },
+          { name: "Versailles Gardens", address: "Place d'Armes, 78000 Versailles", maps: "https://www.google.com/maps/search/?api=1&query=Versailles+Gardens%2C+Place+d%27Armes%2C+78000+Versailles" }
+        ],
         book: ["Versailles passport/timed ticket"],
         tips: "This is the most tiring day of the trip, so give yourself a slower evening afterward."
       },
@@ -836,6 +898,11 @@
           "End with Arc de Triomphe at sunset and a farewell dinner."
         ],
         food: ["Saint-Germain lunch", "Café stop", "Nice final Paris dinner"],
+        locations: [
+          { name: "Musée d’Orsay", address: "Esplanade Valéry Giscard d'Estaing, 75007 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Mus%C3%A9e+d%27Orsay%2C+Esplanade+Val%C3%A9ry+Giscard+d%27Estaing%2C+75007+Paris" },
+          { name: "Saint-Germain-des-Prés", address: "Saint-Germain-des-Prés, 75006 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Saint-Germain-des-Pr%C3%A9s%2C+75006+Paris" },
+          { name: "Arc de Triomphe", address: "Place Charles-de-Gaulle, 75008 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Arc+de+Triomphe%2C+Place+Charles-de-Gaulle%2C+75008+Paris" }
+        ],
         book: ["Musée d’Orsay ticket", "Arc de Triomphe optional ticket"],
         tips: "Keeping this day balanced helps you still have energy for Disney the next day."
       },
@@ -853,6 +920,11 @@
           "Head to the airport only if your flight timing truly allows a park day."
         ],
         food: ["Quick breakfast before train", "Mobile-order or quick-service lunch", "Early dinner only if time allows"],
+        locations: [
+          { name: "Disneyland Paris", address: "Boulevard de Parc, 77700 Coupvray", maps: "https://www.google.com/maps/search/?api=1&query=Disneyland+Paris%2C+Boulevard+de+Parc%2C+77700+Coupvray" },
+          { name: "Marne-la-Vallée–Chessy Station", address: "Place des Passagers du Vent, 77700 Chessy", maps: "https://www.google.com/maps/search/?api=1&query=Marne-la-Vall%C3%A9e%E2%80%93Chessy+Station%2C+Place+des+Passagers+du+Vent%2C+77700+Chessy" },
+          { name: "Paris Charles de Gaulle Airport", address: "95700 Roissy-en-France", maps: "https://www.google.com/maps/search/?api=1&query=Paris+Charles+de+Gaulle+Airport%2C+95700+Roissy-en-France" }
+        ],
         book: ["Disneyland Paris dated ticket"],
         tips: "Only keep this as a same-day park + departure plan if your UA55 departure is late enough. If not, move Disney to Mar 12 and treat Mar 13 as departure only."
       }
@@ -982,6 +1054,17 @@
             <h3 style="margin-top:22px">Food rhythm</h3>
             <div class="foods">
               ${day.food.map(item => `<span class="food">${item}</span>`).join("")}
+            </div>
+
+            <h3 style="margin-top:22px">Addresses and map links</h3>
+            <div class="locations">
+              ${day.locations.map(location => `
+                <div class="location-card">
+                  <div class="location-name">${location.name}</div>
+                  <div class="mini">${location.address}</div>
+                  <a class="map-link" href="${location.maps}" target="_blank" rel="noreferrer">Open in Google Maps</a>
+                </div>
+              `).join("")}
             </div>
           </div>
 
