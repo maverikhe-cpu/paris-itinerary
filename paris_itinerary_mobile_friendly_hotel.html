@@ -564,18 +564,69 @@
       display:none;
     }
 
-    .mobile-days-scroll{
-      display:flex;
+    .mobile-day-bar{
+      display:grid;
+      grid-template-columns:auto minmax(0,1fr) auto;
       gap:10px;
-      overflow-x:auto;
-      padding:4px 2px 2px;
-      scrollbar-width:none;
-      -webkit-overflow-scrolling:touch;
-      scroll-snap-type:x proximity;
+      align-items:center;
     }
 
-    .mobile-days-scroll::-webkit-scrollbar{
+    .mobile-day-nav{
+      min-width:46px;
+      min-height:46px;
+      padding:0;
+      font-size:18px;
+    }
+
+    .mobile-day-current{
+      min-width:0;
+      border:1px solid var(--border);
+      background:white;
+      border-radius:18px;
+      padding:12px 14px;
+    }
+
+    .mobile-day-current .current-date{
+      font-size:12px;
+      font-weight:700;
+      color:#374151;
+      margin-bottom:4px;
+    }
+
+    .mobile-day-current .current-title{
+      font-size:13px;
+      font-weight:700;
+      line-height:1.35;
+      color:#111827;
+    }
+
+    .mobile-day-current .current-meta{
+      font-size:12px;
+      color:#6b7280;
+      margin-top:4px;
+      line-height:1.4;
+    }
+
+    .mobile-day-toggle{
+      width:100%;
+      margin-top:10px;
+    }
+
+    .mobile-day-drawer{
       display:none;
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px solid rgba(0,0,0,0.06);
+    }
+
+    .mobile-day-drawer.open{
+      display:grid;
+      gap:8px;
+    }
+
+    .mobile-day-list{
+      display:grid;
+      gap:8px;
     }
 
     .day-chip{
@@ -583,12 +634,11 @@
       background:white;
       border-radius:18px;
       padding:12px 14px;
-      min-width:170px;
-      scroll-snap-align:start;
       display:flex;
       flex-direction:column;
       gap:4px;
       cursor:pointer;
+      text-align:left;
     }
 
     .day-chip.active{
@@ -721,6 +771,10 @@
         box-shadow:0 8px 24px rgba(0,0,0,.06);
       }
 
+      .mobile-day-bar{
+        gap:8px;
+      }
+
       .content-grid{
         gap:16px;
       }
@@ -815,7 +869,15 @@
     <div class="mobile-days">
       <div class="mobile-days-inner">
         <div class="label" style="margin-bottom:8px">Trip days</div>
-        <div class="mobile-days-scroll" id="mobileDayList"></div>
+        <div class="mobile-day-bar">
+          <button type="button" class="mobile-day-nav" id="mobilePrevBtn" aria-label="Previous day">‹</button>
+          <div class="mobile-day-current" id="mobileCurrentDay"></div>
+          <button type="button" class="mobile-day-nav" id="mobileNextBtn" aria-label="Next day">›</button>
+        </div>
+        <button type="button" class="mobile-day-toggle" id="mobileDayToggle">Show all trip days</button>
+        <div class="mobile-day-drawer" id="mobileDayDrawer">
+          <div class="mobile-day-list" id="mobileDayList"></div>
+        </div>
       </div>
     </div>
 
@@ -1154,10 +1216,16 @@
     let showOnlyBookings = false;
     let selectedDay = "Mar 6";
     let selectedPlaceName = null;
+    let mobileDayDrawerOpen = false;
 
     const checklistEl = document.getElementById("checklist");
     const dayListEl = document.getElementById("dayList");
     const mobileDayListEl = document.getElementById("mobileDayList");
+    const mobileCurrentDayEl = document.getElementById("mobileCurrentDay");
+    const mobilePrevBtn = document.getElementById("mobilePrevBtn");
+    const mobileNextBtn = document.getElementById("mobileNextBtn");
+    const mobileDayToggle = document.getElementById("mobileDayToggle");
+    const mobileDayDrawer = document.getElementById("mobileDayDrawer");
     const detailEl = document.getElementById("detail");
     const toggleBtn = document.getElementById("toggleBtn");
     const bar = document.getElementById("bar");
@@ -1305,9 +1373,24 @@
     function renderDayList(){
       const days = getVisibleDays();
       if (!days.find(d => d.date === selectedDay)) selectedDay = days[0].date;
+      const currentIndex = days.findIndex(d => d.date === selectedDay);
+      const currentDay = days[currentIndex];
 
       dayListEl.innerHTML = "";
       mobileDayListEl.innerHTML = "";
+
+      mobileCurrentDayEl.innerHTML = `
+        <div class="current-date">${currentDay.date}</div>
+        <div class="current-title">${currentDay.title}</div>
+        <div class="current-meta">${currentDay.area}</div>
+      `;
+
+      mobilePrevBtn.disabled = currentIndex <= 0;
+      mobileNextBtn.disabled = currentIndex >= days.length - 1;
+      mobilePrevBtn.style.opacity = currentIndex <= 0 ? ".45" : "1";
+      mobileNextBtn.style.opacity = currentIndex >= days.length - 1 ? ".45" : "1";
+      mobileDayDrawer.classList.toggle("open", mobileDayDrawerOpen);
+      mobileDayToggle.textContent = mobileDayDrawerOpen ? "Hide trip days" : "Show all trip days";
 
       days.forEach(day => {
         const btn = document.createElement("button");
@@ -1328,8 +1411,12 @@
         chip.innerHTML = `
           <span class="chip-date">${day.date}</span>
           <span class="chip-title">${day.title}</span>
+          <span class="mini">${day.area}</span>
         `;
-        chip.addEventListener("click", () => selectDay(day.date, true));
+        chip.addEventListener("click", () => {
+          mobileDayDrawerOpen = false;
+          selectDay(day.date, true);
+        });
         mobileDayListEl.appendChild(chip);
       });
     }
@@ -1419,8 +1506,26 @@
       }
     }
 
+    mobilePrevBtn.addEventListener("click", () => {
+      const days = getVisibleDays();
+      const currentIndex = days.findIndex(d => d.date === selectedDay);
+      if (currentIndex > 0) selectDay(days[currentIndex - 1].date, true);
+    });
+
+    mobileNextBtn.addEventListener("click", () => {
+      const days = getVisibleDays();
+      const currentIndex = days.findIndex(d => d.date === selectedDay);
+      if (currentIndex < days.length - 1) selectDay(days[currentIndex + 1].date, true);
+    });
+
+    mobileDayToggle.addEventListener("click", () => {
+      mobileDayDrawerOpen = !mobileDayDrawerOpen;
+      renderDayList();
+    });
+
     toggleBtn.addEventListener("click", () => {
       showOnlyBookings = !showOnlyBookings;
+      mobileDayDrawerOpen = false;
       toggleBtn.textContent = showOnlyBookings ? "Showing booked days" : "Show bookings only";
       toggleBtn.classList.toggle("active", showOnlyBookings);
       renderDayList();
