@@ -41,6 +41,7 @@
     .grid-top{
       display:grid;
       grid-template-columns:1.5fr 1fr;
+      align-items:start;
       gap:18px;
       margin-bottom:18px;
     }
@@ -53,6 +54,7 @@
     .grid-main{
       display:grid;
       grid-template-columns:320px 1fr;
+      align-items:start;
       gap:18px;
     }
 
@@ -516,6 +518,51 @@
       line-height:1.35;
     }
 
+    @media (min-width: 1025px){
+      .container{
+        display:grid;
+        grid-template-columns:320px minmax(0, 1fr) 360px;
+        gap:18px;
+        align-items:start;
+      }
+
+      .quick-nav,
+      .footer-note{
+        grid-column:1 / -1;
+      }
+
+      .grid-top,
+      .grid-main,
+      .sidebar-stack{
+        display:contents;
+      }
+
+      #summary{
+        grid-column:1 / 3;
+        grid-row:2;
+      }
+
+      #flights{
+        grid-column:3;
+        grid-row:2;
+      }
+
+      #checklist-section{
+        grid-column:3;
+        grid-row:3;
+      }
+
+      #trip-days{
+        grid-column:1;
+        grid-row:3;
+      }
+
+      #day-detail{
+        grid-column:2;
+        grid-row:3;
+      }
+    }
+
     @media (max-width: 1024px){
       .grid-top,
       .grid-main,
@@ -630,13 +677,13 @@
           <div class="badges">
             <span class="badge">Paris first trip</span>
             <span class="badge">Mar 6–13, 2026</span>
-            <span class="badge fill">Disney on Mar 13</span>
+            <span class="badge fill">Disney on Mar 12</span>
             <span class="badge">Hotel: Le Jardin de Verre by Locke</span>
           </div>
-          <h1>Paris itinerary with Disneyland Paris finale</h1>
+          <h1>Paris itinerary with Disneyland Paris on Mar 12</h1>
           <p>
             Built for a first visit: the classics first, neighborhoods with breathing room,
-            and a final Disneyland Paris day. On mobile, use the day scroller below to flip between days.
+            and Disneyland Paris moved to March 12 so March 13 can stay focused on departure. On mobile, use the day scroller below to flip between days.
           </p>
           <div class="soft-card" style="margin-top:14px">
             <div class="label">Your hotel</div>
@@ -744,7 +791,7 @@
     </div>
 
     <div class="footer-note">
-      Note: Disneyland on March 13 only works comfortably if your UA55 departure is late enough for park time plus airport transfer.
+      Note: Disneyland is now on March 12, leaving March 13 for a calmer hotel checkout and airport transfer.
     </div>
   </div>
 
@@ -886,28 +933,6 @@
       },
       {
         date: "Mar 12",
-        title: "Musée d’Orsay + Saint-Germain + Arc de Triomphe sunset",
-        theme: "Art + elegant Paris finale",
-        area: "Left Bank · Champs-Élysées",
-        pace: "Moderate",
-        weather: "Brighter again, around 18°C / 64°F",
-        plan: [
-          "Morning at Musée d’Orsay.",
-          "Lunch and café time in Saint-Germain-des-Prés.",
-          "Flexible afternoon for shopping or rest.",
-          "End with Arc de Triomphe at sunset and a farewell dinner."
-        ],
-        food: ["Saint-Germain lunch", "Café stop", "Nice final Paris dinner"],
-        locations: [
-          { name: "Musée d’Orsay", address: "Esplanade Valéry Giscard d'Estaing, 75007 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Mus%C3%A9e+d%27Orsay%2C+Esplanade+Val%C3%A9ry+Giscard+d%27Estaing%2C+75007+Paris" },
-          { name: "Saint-Germain-des-Prés", address: "Saint-Germain-des-Prés, 75006 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Saint-Germain-des-Pr%C3%A9s%2C+75006+Paris" },
-          { name: "Arc de Triomphe", address: "Place Charles-de-Gaulle, 75008 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Arc+de+Triomphe%2C+Place+Charles-de-Gaulle%2C+75008+Paris" }
-        ],
-        book: ["Musée d’Orsay ticket", "Arc de Triomphe optional ticket"],
-        tips: "Keeping this day balanced helps you still have energy for Disney the next day."
-      },
-      {
-        date: "Mar 13",
         title: "Disneyland Paris day",
         theme: "Confirmed must-do",
         area: "Marne-la-Vallée",
@@ -916,17 +941,38 @@
         plan: [
           "Take the RER A early to Marne-la-Vallée–Chessy.",
           "Spend the day in Disneyland Paris and/or Walt Disney Studios Park.",
-          "Keep a hard cutoff time based on your airport transfer needs.",
-          "Head to the airport only if your flight timing truly allows a park day."
+          "Keep a hard cutoff time so the evening stays relaxed before departure day.",
+          "Head back to Paris at a comfortable hour and pack for the flight."
         ],
-        food: ["Quick breakfast before train", "Mobile-order or quick-service lunch", "Early dinner only if time allows"],
+        food: ["Quick breakfast before train", "Mobile-order or quick-service lunch", "Easy dinner back in Paris"],
         locations: [
           { name: "Disneyland Paris", address: "Boulevard de Parc, 77700 Coupvray", maps: "https://www.google.com/maps/search/?api=1&query=Disneyland+Paris%2C+Boulevard+de+Parc%2C+77700+Coupvray" },
-          { name: "Marne-la-Vallée–Chessy Station", address: "Place des Passagers du Vent, 77700 Chessy", maps: "https://www.google.com/maps/search/?api=1&query=Marne-la-Vall%C3%A9e%E2%80%93Chessy+Station%2C+Place+des+Passagers+du+Vent%2C+77700+Chessy" },
-          { name: "Paris Charles de Gaulle Airport", address: "95700 Roissy-en-France", maps: "https://www.google.com/maps/search/?api=1&query=Paris+Charles+de+Gaulle+Airport%2C+95700+Roissy-en-France" }
+          { name: "Marne-la-Vallée–Chessy Station", address: "Place des Passagers du Vent, 77700 Chessy", maps: "https://www.google.com/maps/search/?api=1&query=Marne-la-Vall%C3%A9e%E2%80%93Chessy+Station%2C+Place+des+Passagers+du+Vent%2C+77700+Chessy" }
         ],
         book: ["Disneyland Paris dated ticket"],
-        tips: "Only keep this as a same-day park + departure plan if your UA55 departure is late enough. If not, move Disney to Mar 12 and treat Mar 13 as departure only."
+        tips: "Disneyland works much better on Mar 12 because it removes same-day airport stress."
+      },
+      {
+        date: "Mar 13",
+        title: "Departure day + flexible Left Bank morning",
+        theme: "Calm finish",
+        area: "Hotel area · CDG airport",
+        pace: "Light",
+        weather: "Cloudy with light rain possible, around 15°C / 60°F",
+        plan: [
+          "Have a slow breakfast, final packing check, and hotel checkout.",
+          "If time allows, keep to a short walk or coffee near the 5th arrondissement only.",
+          "Leave for Paris Charles de Gaulle Airport with conservative timing for UA55.",
+          "Treat anything beyond that as optional, not core sightseeing."
+        ],
+        food: ["Hotel breakfast", "Coffee near the hotel", "Airport meal if needed"],
+        locations: [
+          { name: "Le Jardin de Verre by Locke", address: "7 Rue Lacépède, 75005 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Le+Jardin+de+Verre+by+Locke%2C+7+Rue+Lac%C3%A9p%C3%A8de%2C+75005+Paris" },
+          { name: "Jardin des Plantes", address: "57 Rue Cuvier, 75005 Paris", maps: "https://www.google.com/maps/search/?api=1&query=Jardin+des+Plantes%2C+57+Rue+Cuvier%2C+75005+Paris" },
+          { name: "Paris Charles de Gaulle Airport", address: "95700 Roissy-en-France", maps: "https://www.google.com/maps/search/?api=1&query=Paris+Charles+de+Gaulle+Airport%2C+95700+Roissy-en-France" }
+        ],
+        book: [],
+        tips: "Keep Mar 13 intentionally light so the airport transfer stays calm and predictable."
       }
     ];
 
@@ -939,7 +985,7 @@
       "Reserve Notre-Dame free entry",
       "Book Sainte-Chapelle time slot",
       "Decide if you want a Seine cruise",
-      "Check airport transfer timing for Mar 13"
+      "Check airport transfer timing for Mar 13 departure"
     ];
 
     let showOnlyBookings = false;
@@ -1085,7 +1131,7 @@
 
             <div class="dark">
               <h3>Most important reminder</h3>
-              <p>March 13 only works as a Disneyland day if your departure time gives you enough margin to leave the park, collect luggage if needed, and reach the airport calmly.</p>
+              <p>Disneyland is on March 12 now, so keep March 13 focused on checkout, luggage, and a calm CDG transfer for UA55.</p>
             </div>
           </div>
         </div>
